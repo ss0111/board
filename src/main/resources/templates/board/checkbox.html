@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Checkbox and Input Box</title>
+</head>
+<body>
+    <br>
+    <span id="myspan">
+        <input type="checkbox" id="freeurl">
+        <label for="freeurl"> 무료로 시작하기 버튼 및 URL 연결 여부 설정 </label>
+    </span>
+
+    <script type="text/javascript">
+        function addElement() {
+            var aInput = document.getElementById('myspan').getElementsByTagName('input');
+            for (var i = 0; i < aInput.length; i++) {
+                aInput[i].onclick = new Function('addDelete(this)');
+            }
+        }
+
+        function addDelete(obj) {
+            var parentSpan = document.getElementById('myspan');
+            if (obj.nextSibling.nodeName != 'BR') { // add
+                var br = document.createElement('br');
+                var oInputText = document.createElement('input');
+                oInputText.setAttribute('type', 'text');
+                oInputText.setAttribute('placeholder', 'URL을 입력해주세요');
+                parentSpan.appendChild(br);
+                parentSpan.appendChild(oInputText);
+            } else { // delete
+                parentSpan.removeChild(obj.nextSibling); // remove br
+                parentSpan.removeChild(obj.nextSibling); // remove input
+            }
+        }
+
+        function addLoadEvent(func) {
+            var oldonload = window.onload;
+            if (typeof window.onload != 'function') {
+                window.onload = func;
+            } else {
+                window.onload = function() {
+                    if (oldonload) {
+                        oldonload();
+                    }
+                    func();
+                }
+            }
+        }
+
+        addLoadEvent(function() {
+            addElement();
+        });
+    </script>
+</body>
+</html>

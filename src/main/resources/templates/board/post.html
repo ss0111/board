@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/form.css}" href="../css/form.css" rel="stylesheet">
+
+     <style>
+        #myspan input[type="text"] {
+            width: 100%; /* 원하는 너비로 조정하세요, 예: 300px */
+        }
+    </style>
+
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>게시글</h2>
+    </div>
+
+    <button class="btn btn-dark pull-right"
+            onclick="location.href='board/postList.html'"
+            th:onclick="|location.href='@{/board}'|"
+            type="button">목록으로
+    </button>
+
+    <div>
+        <label for="postTitle">제목</label>
+        <input type="text" id="postTitle" name="postTitle" class="form-control"
+               value="제목" th:value="${post.title}" readonly>
+    </div>
+    <div>
+        <label for="postContent">내용</label>
+        <textarea class="form-control" rows="5"
+                  id="postContent" name="postContent"
+                  th:value="${post.content}" th:text="${post.content}" readonly></textarea>
+    </div>
+    <div>
+        <label for="writer">작성자</label>
+        <input type="text" id="writer" name="writer" class="form-control"
+               value="작성자" th:value="${post.user.loginId}" readonly>
+    </div>
+    <div>
+        <label for="registerDate">작성일</label>
+        <input type="text" id="registerDate" name="registerDate" class="form-control"
+               value="작성자" th:value="${#temporals.format(post.registerDate, 'yyyy-MM-dd HH:mm')}"
+               readonly>
+    </div>
+    <hr class="my-4">
+
+    <form th:action="@{/board/{postId}/delete(postId=${post.id})}" method="post">
+
+        <button class="btn btn-primary"
+                th:onclick="|location.href='@{/board/{postId}/edit(postId=${post.id})}'|"
+                type="button">수정</button>
+
+        <button class="btn btn-danger" type="submit">삭제</button>
+    </form>
+
+
+<!-- 7월 정기 반영 - checkbox test -->
+<br><br><br>
+ <br>
+    <span id="myspan">
+        <input type="checkbox" id="freeurl">
+        <label for="freeurl"> 무료로 시작하기 버튼 및 URL 연결 여부 설정 </label>
+    </span>
+
+    <script type="text/javascript">
+        function addElement() {
+
+            var aInput = document.getElementById('myspan').getElementsByTagName('input');
+
+            for (var i = 0; i < aInput.length; i++) {
+                aInput[i].onclick = new Function('addDelete(this)');
+            }
+        }
+
+        function addDelete(obj) {
+
+            var parentSpan = document.getElementById('myspan');
+
+            if (obj.nextSibling.nodeName != 'BR') { // add
+                var br = document.createElement('br');
+                var oInputText = document.createElement('input');
+                oInputText.setAttribute('type', 'text');
+                oInputText.setAttribute('placeholder', 'URL을 입력해주세요');
+                parentSpan.appendChild(br);
+                parentSpan.appendChild(oInputText);
+            } else { // delete
+                parentSpan.removeChild(obj.nextSibling); // remove br
+                parentSpan.removeChild(obj.nextSibling); // remove input
+            }
+        }
+
+        function addLoadEvent(func) {
+            var oldonload = window.onload;
+            if (typeof window.onload != 'function') {
+                window.onload = func;
+            } else {
+                window.onload = function() {
+                    if (oldonload) {
+                        oldonload();
+                    }
+                    func();
+                }
+            }
+        }
+
+        addLoadEvent(function() {
+            addElement();
+        });
+    </script>
+
+ </div> <!-- /container -->
+
+<br><br><br><br>
+</body>

@@ -1,0 +1,18 @@
+
+
+@font-face {
+    font-family: 'KyoboHandwriting2023wsa';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404-2@1.0/KyoboHandwriting2023wsa.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+/*KCC한빛체*/
+@font-face {
+    font-family: 'KCC-Hanbit';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/KCC-Hanbit.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
